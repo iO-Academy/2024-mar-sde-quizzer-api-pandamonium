@@ -18,7 +18,7 @@ class QuizSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             DB::table('quizzes')->insert([
                 'name' => Str::random(10),
-                'description' => Str::random(500)
+                'description' => Str::random(100)
             ]);
         }
 
