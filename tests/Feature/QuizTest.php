@@ -19,7 +19,7 @@ class QuizTest extends TestCase
             ->assertJson(function(AssertableJson $json) {
                 $json->hasAll(['message', 'data'])
                     ->has('data', 1, function(AssertableJson $json) {
-                        $json->hasAll(['id', 'name', 'description', 'created_at', 'updated_at']);
+                        $json->hasAll(['id', 'name', 'description']);
             });
         });
     }

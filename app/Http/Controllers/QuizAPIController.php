@@ -11,10 +11,10 @@ class QuizAPIController extends Controller
     public function displayAllQuizzes():JsonResponse
     {
         try {
-        $quizzes = Quiz::all();
+            $quizzes = Quiz::all();
         } catch(Exception $e) {
             return response()->json([
-                "message" => "Database not found"
+                "message" => "Something has gone wrong"
             ], 500);
         }
 
