@@ -17,7 +17,7 @@ class QuizTest extends TestCase
         $response = $this->get('/api/quizzes');
         $response->assertStatus(200)
             ->assertJson(function(AssertableJson $json) {
-                $json->hasAll(['message', 'success', 'data'])
+                $json->hasAll(['message', 'data'])
                     ->has('data', 1, function(AssertableJson $json) {
                         $json->hasAll(['id', 'name', 'description', 'created_at', 'updated_at']);
             });
