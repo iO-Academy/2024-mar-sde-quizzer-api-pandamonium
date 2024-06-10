@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class QuizAPIController extends Controller
@@ -23,4 +24,18 @@ class QuizAPIController extends Controller
             "data" => $quizzes
         ]);
     }
+
+    public function addNewQuiz(Request $request):JsonResponse
+    {
+
+            $quiz = new Quiz();
+
+            $quiz->name = $request->name;
+            $quiz->description = $request->description;
+
+            $quiz->save();
+            
+        return response()->json(['Quiz created'], 201);
+    }
 }
+//$quiz->assertUnprocessable();
