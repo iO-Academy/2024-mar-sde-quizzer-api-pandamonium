@@ -41,7 +41,7 @@ class QuizAPIController extends Controller
         } catch (Exception $e) {
             $result = false;
         }
-        
+
         if ($result === true) {
             return response()->json(["message" => 'Quiz created'], 201);
         } else {
