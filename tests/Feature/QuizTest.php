@@ -6,6 +6,7 @@ use App\Models\Quiz;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
+use voku\helper\ASCII;
 
 class QuizTest extends TestCase
 {
@@ -22,5 +23,22 @@ class QuizTest extends TestCase
                         $json->hasAll(['id', 'name', 'description']);
             });
         });
+    }
+
+    public function test_addNewQuiz_Success(): void
+    {
+        Quiz::factory()->create();
+        $testData = [
+            'name' => "dave",
+            'description' => "hey",
+        ];
+
+        $response = $this->postJson('/api/quizzes', $testData);
+
+        $response->assertStatus(201)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message']);
+            });
+        $this->assertDatabaseHas('quizzes', $testData);
     }
 }
