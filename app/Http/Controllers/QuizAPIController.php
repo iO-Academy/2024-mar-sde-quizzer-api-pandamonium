@@ -32,17 +32,22 @@ class QuizAPIController extends Controller
             'description' => 'required|string|min:1|max:1000'
         ]);
 
-        try {
-            $quiz = new Quiz();
-            $quiz->name = $request->name;
-            $quiz->description = $request->description;
-            $quiz->save();
+        $quiz = new Quiz();
+        $quiz->name = $request->name;
+        $quiz->description = $request->description;
 
+        try {
+            $result = $quiz->save();
         } catch (Exception $e) {
+            $result = false;
+        }
+        
+        if ($result === true) {
+            return response()->json(["message" => 'Quiz created'], 201);
+        } else {
             return response()->json([
-                "message" => "Something has gone wrong"
+                "message" => "Quiz creation failed"
             ], 500);
         }
-            return response()->json(["message" => 'Quiz created'], 201);
     }
 }
