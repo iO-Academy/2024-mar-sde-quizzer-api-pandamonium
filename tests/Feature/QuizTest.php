@@ -6,7 +6,6 @@ use App\Models\Quiz;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
-use voku\helper\ASCII;
 
 class QuizTest extends TestCase
 {

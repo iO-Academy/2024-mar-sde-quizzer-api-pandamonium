@@ -28,23 +28,21 @@ class QuizAPIController extends Controller
     public function addNewQuiz(Request $request): JsonResponse
     {
         $request->validate([
-            'name' => 'required|string|min:1|max:10',
-            'description' => 'required|string|min:1|max:100'
+            'name' => 'required|string|min:1|max:255',
+            'description' => 'required|string|min:1|max:1000'
         ]);
 
-        $quiz = new Quiz();
+        try {
+            $quiz = new Quiz();
+            $quiz->name = $request->name;
+            $quiz->description = $request->description;
+            $quiz->save();
 
-        $quiz->name = $request->name;
-        $quiz->description = $request->description;
-
-        $quiz->save();
-
-        if ($quiz) {
-            return response()->json(["message" => 'Quiz created'], 201);
+        } catch (Exception $e) {
+            return response()->json([
+                "message" => "Something has gone wrong"
+            ], 500);
         }
-
-        return response()->json([
-            "message" => "Something has gone wrong"
-        ], 500);
+            return response()->json(["message" => 'Quiz created'], 201);
     }
 }
