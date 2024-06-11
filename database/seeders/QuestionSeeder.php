@@ -10,12 +10,12 @@ class QuestionSeeder extends Seeder
 {
     public function run(): void
     {
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 15; $i++) {
             DB::table('questions')->insert([
                 'question' => Str::random(30),
                 'hint' => Str::random(60),
                 'points' => rand(0, 100),
-                'quiz_id' => rand(1, 10),
+                'quiz_id' => rand(1, 3),
             ]);
         }
     }

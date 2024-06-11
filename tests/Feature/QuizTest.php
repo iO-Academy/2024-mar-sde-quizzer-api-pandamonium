@@ -114,4 +114,17 @@ class QuizTest extends TestCase
                     });
             });
     }
+
+    public function test_getQuizByID_success(): void
+    {
+        Quiz::factory()->create();
+        $response = $this->get('/api/quizzes/1');
+        $response->assertStatus(200)
+            ->assertJson(function(AssertableJson $json) {
+                $json->hasAll(['message', 'data'])
+                    ->has('data', 1, function(AssertableJson $json) {
+                        $json->hasAll(['id', 'name', 'description']);
+                    });
+            });
+    }
 }
