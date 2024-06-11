@@ -15,7 +15,7 @@ class QuestionSeeder extends Seeder
                 'question' => Str::random(30),
                 'hint' => Str::random(60),
                 'points' => rand(0, 100),
-                'quiz_id' => rand(0, 10),
+                'quiz_id' => rand(1, 10),
             ]);
         }
     }

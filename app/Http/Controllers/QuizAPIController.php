@@ -52,14 +52,15 @@ class QuizAPIController extends Controller
     }
 
     public function displayQuizByID(int $id): JsonResponse {
-        try {
-            $singleQuiz = Quiz::find($id);
-        } catch (Exception $e) {
-            return response()->json([
-                "message" => "Something has gone wrong"
-            ], 500);
-        }
+//        try {
+//            $singleQuiz = Quiz::find($id);
+             $singleQuiz = Quiz::with(['questions', 'questions.answers'])->find($id);
 
+//        } catch (Exception $e) {
+//            return response()->json([
+//                "message" => "Something has gone wrong"
+//            ], 500);
+//        }
         return response()->json([
             "message" => "Quiz retrieved",
             "data" => $singleQuiz

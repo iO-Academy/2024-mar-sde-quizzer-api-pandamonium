@@ -15,7 +15,7 @@ class AnswerSeeder extends Seeder
                 'answer' => Str::random(30),
                 'feedback' => Str::random(60),
                 'correct' => rand(0, 1),
-                'question_id' => rand(0, 10)
+                'question_id' => rand(1, 10)
             ]);
         }
     }
