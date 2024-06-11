@@ -23,4 +23,95 @@ class QuizTest extends TestCase
             });
         });
     }
+
+    public function test_addNewQuiz_Success(): void
+    {
+        Quiz::factory()->create();
+        $testData = [
+            'name' => "dave",
+            'description' => "hey",
+        ];
+
+        $response = $this->postJson('/api/quizzes', $testData);
+
+        $response->assertStatus(201)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message']);
+            });
+        $this->assertDatabaseHas('quizzes', $testData);
+    }
+
+    public function test_addNewQuiz_nameValidation(): void
+    {
+        Quiz::factory()->create();
+        $testData = [
+            'description' => "hey"
+        ];
+
+        $response = $this->postJson('/api/quizzes', $testData);
+
+        $response->assertStatus(422)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'errors'])
+                    ->has('errors', function (AssertableJson $json) {
+                        $json->hasAll('name');
+                    });
+            });
+    }
+
+    public function test_addNewQuiz_descriptionValidation(): void
+    {
+        Quiz::factory()->create();
+        $testData = [
+            'name' => "hey"
+        ];
+
+        $response = $this->postJson('/api/quizzes', $testData);
+
+        $response->assertStatus(422)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'errors'])
+                    ->has('errors', function (AssertableJson $json) {
+                        $json->hasAll('description');
+                    });
+            });
+    }
+
+    public function test_addNewQuiz_malformedName(): void
+    {
+        Quiz::factory()->create();
+        $testData = [
+            'name' => 10,
+             'description' => "hey"
+        ];
+
+        $response = $this->postJson('/api/quizzes', $testData);
+
+        $response->assertStatus(422)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'errors'])
+                    ->has('errors', function (AssertableJson $json) {
+                        $json->hasAll('name');
+                    });
+            });
+    }
+
+    public function test_addNewQuiz_malformedDescription(): void
+    {
+        Quiz::factory()->create();
+        $testData = [
+            'name' => 'hey',
+            'description' =>10
+        ];
+
+        $response = $this->postJson('/api/quizzes', $testData);
+
+        $response->assertStatus(422)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'errors'])
+                    ->has('errors', function (AssertableJson $json) {
+                        $json->hasAll('description');
+                    });
+            });
+    }
 }
