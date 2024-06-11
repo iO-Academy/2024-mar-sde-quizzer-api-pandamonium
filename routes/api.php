@@ -9,5 +9,8 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/quizzes', [QuizAPIController::class, 'displayAllQuizzes']);
-
+Route::get('/quiz/{id}', [QuizAPIController::class, 'displayQuizByID']);
 Route::post('/quizzes', [QuizAPIController::class, 'addNewQuiz']);
+
+
+

@@ -45,4 +45,19 @@ class QuizAPIController extends Controller
         }
             return response()->json(["message" => 'Quiz created'], 201);
     }
+
+    public function displayQuizByID(int $id): JsonResponse {
+        try {
+            $singleQuiz = Quiz::find($id);
+        } catch (Exception $e) {
+            return response()->json([
+                "message" => "Something has gone wrong"
+            ], 500);
+        }
+
+        return response()->json([
+            "message" => "Quiz retrieved",
+            "data" => $singleQuiz
+        ]);
+    }
 }
