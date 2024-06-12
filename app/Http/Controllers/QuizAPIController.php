@@ -68,7 +68,7 @@ class QuizAPIController extends Controller
             ]);
         } else {
             return response()->json([
-                "message" => "Quiz retrieved"
+                "message" => "Quiz not found"
             ], 404);
         }
     }
