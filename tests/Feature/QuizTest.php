@@ -165,7 +165,7 @@ class QuizTest extends TestCase
         $this->assertDatabaseHas('questions', $testData);
     }
 
-    public function test_addNewQuestion_questionValidation(): void
+    public function test_addNewQuestion_missingQuestion(): void
     {
         Question::factory()->create();
         $testData = [
@@ -183,7 +183,7 @@ class QuizTest extends TestCase
             });
     }
 
-    public function test_addNewQuestion_pointsValidation(): void
+    public function test_addNewQuestion_missingPoints(): void
     {
         Question::factory()->create();
         $testData = [
