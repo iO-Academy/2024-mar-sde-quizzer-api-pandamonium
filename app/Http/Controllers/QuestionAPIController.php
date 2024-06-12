@@ -15,7 +15,7 @@ class QuestionAPIController extends Controller
             'question' => 'required|string|min:1|max:255',
             'hint' => 'string|max:255',
             'points' => 'required|min:1|integer',
-            'quiz_id' => 'required|integer|exists, quizzes, id'
+            'quiz_id' => 'required|integer|exists:quizzes,id'
         ]);
 
         $question = new Question();
