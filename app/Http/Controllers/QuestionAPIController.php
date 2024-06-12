@@ -14,8 +14,7 @@ class QuestionAPIController extends Controller
         $request->validate([
             'question' => 'required|string|min:1|max:255',
             'hint' => 'string|max:255',
-            'points' => 'required|integer',
-
+            'points' => 'required|min:1|integer',
         ]);
 
         $question = new Question();

@@ -219,5 +219,4 @@ class QuizTest extends TestCase
                     });
             });
     }
-
 }
