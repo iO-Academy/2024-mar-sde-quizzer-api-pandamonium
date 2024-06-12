@@ -4,17 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Quiz extends Model
+class Answer extends Model
 {
     use HasFactory;
-
-    public function questions(): HasMany
+    public function question(): BelongsTo
     {
-        return $this->hasMany(Question::class);
+        return $this->belongsTo(Question::class);
     }
 
     protected $hidden = ['created_at', 'updated_at'];
-
 }
