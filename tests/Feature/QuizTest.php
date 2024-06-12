@@ -130,7 +130,18 @@ class QuizTest extends TestCase
                                     ->has('answers', 1, function(AssertableJson $json) {
                                         $json->hasAll(['id', 'answer', 'feedback', 'correct', 'question_id']);
                         });
+                    });
                 });
             });
+    }
+
+    public function test_getQuizByID_failure(): void
+    {
+        Answer::factory()->create();
+        $response = $this->get('/api/quizzes/10');
+        $response->assertStatus(404)
+            ->assertJson(function(AssertableJson $json) {
+                $json->hasAll(['message']);
             });
-    }}
+    }
+}
