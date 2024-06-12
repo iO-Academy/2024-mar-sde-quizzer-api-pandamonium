@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class QuestionAPIController extends Controller
 {
-    public function addNewQuestion( Request $request): JsonResponse
+    public function addNewQuestion(Request $request): JsonResponse
     {
         $request->validate([
             'question' => 'required|string|min:1|max:255',
