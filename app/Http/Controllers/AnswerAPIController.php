@@ -13,13 +13,14 @@ class AnswerAPIController extends Controller
     {
         $request->validate([
             'answer' => 'required|string|min:1|max:255',
-            'correct' => 'required|boolean',
+            'correct' => 'boolean',
         ]);
 
         $answer = new Answer();
         $answer->answer = $request->answer;
         $answer->correct = $request->correct;
         $answer->question_id = $request->question_id;
+
 
         try {
             $result = $answer->save();
