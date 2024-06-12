@@ -11,6 +11,6 @@ Route::get('/user', function (Request $request) {
 Route::get('/quizzes', [QuizAPIController::class, 'displayAllQuizzes']);
 Route::get('/quizzes/{id}', [QuizAPIController::class, 'displayQuizByID']);
 Route::post('/quizzes', [QuizAPIController::class, 'addNewQuiz']);
-
+Route::post('/questions', [QuizAPIController::class, 'addNewQuestion']);
 
 

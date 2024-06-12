@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use App\Models\Quiz;
 use Exception;
 use Illuminate\Http\Request;
@@ -72,19 +73,20 @@ class QuizAPIController extends Controller
         }
     }
 
-    public function addNewQuestion(int $id, Request $request): JsonResponse
+    public function addNewQuestion( Request $request): JsonResponse
     {
         $request->validate([
             'question' => 'required|string|min:1|max:255',
             'hint' => 'string|max:255',
-            'points' => 'required|integer'
+            'points' => 'required|integer',
+
         ]);
 
         $question = new Question();
         $question->question = $request->question;
         $question->hint = $request->hint;
         $question->points = $request->points;
-        $question->quiz_id = $request->id;
+        $question->quiz_id = $request->quiz_id;
 
         try {
             $result = $question->save();
