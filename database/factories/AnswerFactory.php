@@ -13,7 +13,7 @@ class AnswerFactory extends Factory
             'answer' => $this->faker->text(10),
             'feedback' => $this->faker->text(100),
             'correct' => $this->faker->boolean(),
-            'question_id' => Question::factory(),
+            'question_id' => Question::factory()
         ];
     }
 }

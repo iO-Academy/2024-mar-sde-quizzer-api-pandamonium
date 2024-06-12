@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Answer;
 use App\Models\Quiz;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -117,14 +118,19 @@ class QuizTest extends TestCase
 
     public function test_getQuizByID_success(): void
     {
-        Quiz::factory()->create();
+        Answer::factory()->create();
         $response = $this->get('/api/quizzes/1');
         $response->assertStatus(200)
             ->assertJson(function(AssertableJson $json) {
                 $json->hasAll(['message', 'data'])
-                    ->has('data', 1, function(AssertableJson $json) {
-                        $json->hasAll(['id', 'name', 'description']);
-                    });
+                    ->has('data', function(AssertableJson $json) {
+                        $json->hasAll(['id', 'name', 'description', 'questions'])
+                            ->has('questions', 1, function(AssertableJson $json) {
+                                $json->hasAll(['id', 'question', 'hint', 'points', 'quiz_id', 'answers'])
+                                    ->has('answers', 1, function(AssertableJson $json) {
+                                        $json->hasAll(['id', 'answer', 'feedback', 'correct', 'question_id']);
+                        });
+                });
             });
-    }
-}
+            });
+    }}
