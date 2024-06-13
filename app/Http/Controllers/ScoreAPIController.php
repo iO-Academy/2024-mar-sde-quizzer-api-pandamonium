@@ -20,9 +20,9 @@ class ScoreAPIController extends Controller
         $score->quiz = $request->quiz;
         $score->answers = $request->answers;
         $question_count = ScoreCalculationService::getQuestionCount($score);
-        $correct_count = ScoreCalculationService::getQuestionCount($score);
+//        $correct_count = ScoreCalculationService::getCorrectCount($score);
         $available_points = ScoreCalculationService::getAvailablePoints($score);
-        $points = ScoreCalculationService::getQuestionCount($score);
+//        $points = ScoreCalculationService::getQuestionCount($score);
 
         $data = ['question_count' => $question_count, 'available_points' => $available_points];
 
