@@ -14,6 +14,7 @@ class AnswerAPIController extends Controller
         $request->validate([
             'answer' => 'required|string|min:1|max:255',
             'correct' => 'boolean',
+            'question_id' => 'required|integer|exists:questions,id'
         ]);
 
         $answer = new Answer();

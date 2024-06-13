@@ -262,5 +262,104 @@ class QuizTest extends TestCase
             });
     }
 
+    public function test_addNewAnswer_Success(): void
+    {
+        Answer::factory()->create();
+        $testData = [
+            'answer' => "dave",
+            'feedback' => null,
+            'correct' => 1,
+            'question_id' => 1
+        ];
 
+        $response = $this->postJson('/api/answers', $testData);
+
+        $response->assertStatus(201)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message']);
+            });
+        $this->assertDatabaseHas('answers', $testData);
+    }
+
+    public function test_addNewAnswer_missingAnswer(): void
+    {
+        Answer::factory()->create();
+        $testData = [
+            'feedback' => null,
+            'correct' => 1,
+            'question_id' => 1
+        ];
+
+        $response = $this->postJson('/api/answers', $testData);
+
+        $response->assertStatus(422)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'errors'])
+                    ->has('errors', function (AssertableJson $json) {
+                        $json->hasAll('answer');
+                    });
+            });
+    }
+
+    public function test_addNewAnswer_missingQuestionID(): void
+    {
+        Answer::factory()->create();
+        $testData = [
+            'answer' => "dave",
+            'feedback' => null,
+            'correct' => 1
+        ];
+
+        $response = $this->postJson('/api/answers', $testData);
+
+        $response->assertStatus(422)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'errors'])
+                    ->has('errors', function (AssertableJson $json) {
+                        $json->hasAll('question_id');
+                    });
+            });
+    }
+
+    public function test_addNewAnswer_malformedAnswer(): void
+    {
+        Answer::factory()->create();
+        $testData = [
+            'answer' => 3,
+            'feedback' => null,
+            'correct' => 1,
+            'question_id' => 1
+        ];
+
+        $response = $this->postJson('/api/answers', $testData);
+
+        $response->assertStatus(422)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'errors'])
+                    ->has('errors', function (AssertableJson $json) {
+                        $json->hasAll('answer');
+                    });
+            });
+    }
+
+    public function test_addNewAnswer_invalidQuestionID(): void
+    {
+        Answer::factory()->create();
+        $testData = [
+            'answer' => "dave",
+            'feedback' => null,
+            'correct' => 1,
+            'question_id' => 1000
+        ];
+
+        $response = $this->postJson('/api/answers', $testData);
+
+        $response->assertStatus(422)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'errors'])
+                    ->has('errors', function (AssertableJson $json) {
+                        $json->hasAll('question_id');
+                    });
+            });
+    }
 }
